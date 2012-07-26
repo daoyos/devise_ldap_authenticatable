@@ -11,6 +11,7 @@ module Devise
     #
     module LdapAuthenticatable
       extend ActiveSupport::Concern
+      #extend Devise::Models::DatabaseAuthenticatable
 
       included do
         attr_reader :current_password, :password
@@ -38,6 +39,7 @@ module Devise
 
       def password=(new_password)
         @password = new_password
+        self.encrypted_password = password_digest(@password) if @password.present?
       end
 
       # Checks if a resource is valid upon authentication.
