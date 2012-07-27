@@ -87,6 +87,7 @@ module Devise
           if (resource.blank? and ::Devise.ldap_create_user)
             resource = new
             resource[auth_key] = auth_key_value
+            resource.email =  [Devise::LdapAdapter.get_ldap_param(attributes[:username],"mail")].flatten.first 
             resource.password = attributes[:password]
           end
 
